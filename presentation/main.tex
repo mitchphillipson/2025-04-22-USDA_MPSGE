@@ -131,6 +131,32 @@ pkg> add https://github.com/julia-mpsge/windc_household_model.jl
 
 \end{frame}
 
+\begin{frame}[fragile]{Using this Code}
+    I've uploaded this code and presentation to GitHub. You can find it \href{https://github.com/mitchphillipson/2025-04-22-USDA_MPSGE}{here}. 
+
+    \vspace{3mm}
+
+    This is not a Julia package, so you can not add it using package manager. Clone the repo and navigate to the directory in the terminal (I open the directory in VSCode and use the terminal there). Start Julia, activate the environment, and instantiate the packages.
+
+
+    \begin{verbatim}
+pkg> instantiate
+pkg> resolve
+    \end{verbatim}
+
+    \vspace{-5mm}
+
+    The resolve step may be unnecessary. If you get errors, try to resolve in the default environment
+
+    \begin{verbatim}
+pkg> activate
+pkg> resolve
+    \end{verbatim}
+
+    \vspace{-5mm}
+    After this you should be able to run the example files in VSCode.
+
+\end{frame}
 
 
 \end{document}
