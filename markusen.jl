@@ -3,16 +3,16 @@ using markusen_2_2
 using MPSGE, JuMP, PATHSolver, DataFrames
 
 
-
+# Initialize the MPSGE version of the model and verify the benchmark
 mpsge = mpsge_2_2_taxes()
-
 solve!(mpsge, cumulative_iteration_limit=0)
 
+
+# Same as above with the algebraic version of the model
 mcp = mcp_2_2_taxes()
 set_attribute(mcp, "cumulative_iteration_limit", 0)
 optimize!(mcp)
 set_attribute(mcp, "cumulative_iteration_limit", 10_000)
-
 
 
 ## Counterfactual 1 - tax_pl = .1
@@ -22,6 +22,8 @@ optimize!(mcp)
 set_value!(mpsge[:tax_pl], 0.1)
 solve!(mpsge)
 
+
+## Verify the two solutions are the same
 vars = [:X, :Y, :W, :PX, :PY, :PW, :PL, :PK, :CONS]
 
 out = "| Variable | MPSGE | MCP |\n| --------- | ----- | --- |\n"
@@ -31,6 +33,8 @@ end
 
 print(out)
 
+
+## Extract the cost function of X from the MPSGE model
 cost_function(mpsge[:X])
 
 
@@ -41,12 +45,8 @@ cost_function(mpsge[:X])
 
 
 
-
-
-
-
-
-
+## Part 2: Add a parameter that controls elasticity on X
+## Left to the reader to implement the algebraic version of this model.
 function mpsge_2_2_taxes_new()
 
     M = MPSGEModel()
@@ -105,12 +105,10 @@ function mpsge_2_2_taxes_new()
 end
 
 M = mpsge_2_2_taxes_new()
-
 solve!(M, cumulative_iteration_limit=0)
 
 
 set_value!(M[:tax_pl], 0.1)
-
 solve!(M)
 
 df = generate_report(M) |>

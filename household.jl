@@ -6,7 +6,6 @@ using DataFrames, MPSGE, PlotlyJS
 data = load_data(2017)
 
 household = household_model(data);
-
 solve!(household, cumulative_iteration_limit=0)
 
 #zero_profit(household[:KS])
@@ -17,7 +16,7 @@ set_value!.(household[:tm], .2)
 solve!(household)
 
 
-
+# Create a graph of the percent change in real wages
 
 # This could be automated, but needs work to do
 vars = Dict(
